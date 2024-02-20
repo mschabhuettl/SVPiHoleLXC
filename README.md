@@ -43,7 +43,7 @@ bash -c "$(wget -qLO - https://github.com/mschabhuettl/SVPiHoleLXC/raw/main/ct/s
 ### ⚡ Default Settings
 
 - **RAM:** 1024MiB
-- **Storage:** 8GB
+- **Storage:** 16GB
 - **CPU:** 2vCPU
 
 ### Pi-hole updatelists Integration
