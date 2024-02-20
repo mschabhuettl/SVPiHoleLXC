@@ -1,27 +1,28 @@
 #!/usr/bin/env bash
-source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build.func)
+source <(curl -s https://raw.githubusercontent.com/mschabhuettl/SVPiHoleLXC/main/misc/build.func)
 # Copyright (c) 2021-2024 tteck
-# Author: tteck (tteckster)
+# Copyright (c) 2024 mschabhuettl
+# Author: tteck (tteckster), mschabhuettl
 # License: MIT
-# https://github.com/tteck/Proxmox/raw/main/LICENSE
+# https://github.com/mschabhuettl/SVPiHoleLXC/raw/main/LICENSE
 
 function header_info {
 clear
 cat <<"EOF"
-    ____  ____   __  ______  __    ______
-   / __ \/  _/  / / / / __ \/ /   / ____/
-  / /_/ // /___/ /_/ / / / / /   / __/   
- / ____// /___/ __  / /_/ / /___/ /___   
-/_/   /___/  /_/ /_/\____/_____/_____/   
+   ______    ______  _       __  ______  __    ______
+  / ___/ |  / / __ \(_)     / / / / __ \/ /   / ____/
+  \__ \| | / / /_/ / /_____/ /_/ / / / / /   / __/   
+ ___/ /| |/ / ____/ /_____/ __  / /_/ / /___/ /___   
+/____/ |___/_/   /_/     /_/ /_/\____/_____/_____/   
  
 EOF
 }
 header_info
 echo -e "Loading..."
-APP="Pihole"
-var_disk="2"
-var_cpu="1"
-var_ram="512"
+APP="SVPihole"
+var_disk="8"
+var_cpu="2"
+var_ram="1024"
 var_os="debian"
 var_version="12"
 variables
