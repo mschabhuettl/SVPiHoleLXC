@@ -101,21 +101,47 @@ EOF
   msg_ok "Installed Unbound"
 fi
 
+# Prompt user to decide whether to install pihole-updatelists
 read -r -p "Would you like to add pihole-updatelists? <Y/n> " prompt
 if [[ -z "$prompt" || ${prompt,,} =~ ^(y|yes)$ ]]; then
+  # Displaying message about installing pihole-updatelists
   msg_info "Installing pihole-updatelists"
+  
+  # Installing necessary PHP packages
   $STD apt-get install -y php-cli php-sqlite3 php-intl php-curl sqlite3
+  
+  # Downloading and executing the installation script for pihole-updatelists
   wget -O - https://raw.githubusercontent.com/jacklul/pihole-updatelists/master/install.sh | bash
+  
+  # Disabling pihole's default updateGravity job in the cron.d/pihole to prevent conflicts
   sed -e '/pihole updateGravity/ s/^#*/#/' -i /etc/cron.d/pihole
+  
+  # Preparing a systemd override directory for pihole-FTL.service
   mkdir -p /etc/systemd/system/pihole-FTL.service.d
-  echo -e "[Service]\nExecStartPre=-/bin/sh -c '[ -w /etc/cron.d/pihole ] && /bin/sed -e \"/pihole updateGravity/ s/^#*/#/\" -i /etc/cron.d/pihole'" > /etc/systemd/system/pihole-FTL.service.d/o>
+  
+  # Creating an override config to pre-execute a command before pihole-FTL starts
+  echo -e "[Service]\nExecStartPre=-/bin/sh -c '[ -w /etc/cron.d/pihole ] && /bin/sed -e \"/pihole updateGravity/ s/^#*/#/\" -i /etc/cron.d/pihole'" > /etc/systemd/system/pihole-FTL.service.d/override.conf
+  
+  # Preparing a systemd override directory for pihole-updatelists.timer
+  mkdir -p /etc/systemd/system/pihole-updatelists.timer.d
+  
+  # Creating an override config for the timer to customize its schedule
+  echo -e "[Timer]\nRandomizedDelaySec=5m\nOnCalendar=\nOnCalendar=*-*-* 03:00:00" > /etc/systemd/system/pihole-updatelists.timer.d/override.conf
+  
+  # Reloading systemd daemon to apply overrides and restarting pihole-FTL.service
   systemctl daemon-reload
   systemctl restart pihole-FTL.service
+  
+  # Downloading the configuration file for pihole-updatelists
   wget -O /etc/pihole-updatelists.conf https://raw.githubusercontent.com/mschabhuettl/SVPiHoleLXC/main/config/pihole-updatelists.conf
+  
+  # Cleaning up the gravity database by removing all adlists, domain lists, and their group associations
   sqlite3 /etc/pihole/gravity.db "DELETE FROM adlist"
   sqlite3 /etc/pihole/gravity.db "DELETE FROM adlist_by_group"
   sqlite3 /etc/pihole/gravity.db "DELETE FROM domainlist"
   sqlite3 /etc/pihole/gravity.db "DELETE FROM domainlist_by_group"
+  
+  # Executing pihole-updatelists to update lists based on the newly downloaded configuration
   pihole-updatelists
 fi
 
