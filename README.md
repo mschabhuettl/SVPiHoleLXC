@@ -1,35 +1,15 @@
 # SVPiHoleLXC - Pi-hole LXC with RPiList and Firebog Lists
 
 <div align="center">
-  <div style="display: flex; align-items: center; justify-content: center;">
-    <div>
-      <img src="https://avatars.githubusercontent.com/u/56664851" alt="RPiList" height="100" />
-    </div>
-    <div style="margin: 0 20px;">
-      <img src="https://emojicdn.elk.sh/🤝" alt="Handshake" height="50" />
-    </div>
-    <div>
-      <img src="https://github.com/home-assistant/brands/blob/master/core_integrations/pi_hole/icon.png?raw=true" alt="Pi-hole" height="100" />
-    </div>
-    <div style="margin: 0 20px;">
-      <img src="https://emojicdn.elk.sh/🤝" alt="Handshake" height="50" />
-    </div>
-    <div>
-      <img src="https://avatars.githubusercontent.com/u/8418678" alt="pihole-updatelists" height="100" />
-    </div>
-    <div style="margin: 0 20px;">
-      <img src="https://emojicdn.elk.sh/🤝" alt="Handshake" height="50" />
-    </div>
-    <div>
-      <img src="https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/logo-81x112.png" alt="Proxmox VE Helper-Scripts" height="100" />
-    </div>
-    <div style="margin: 0 20px;">
-      <img src="https://emojicdn.elk.sh/🤝" alt="Handshake" height="50" />
-    </div>
-    <div>
-      <img src="https://avatars.githubusercontent.com/u/2678585" alt="Proxmox" height="100" />
-    </div>
-  </div>
+  <img src="https://avatars.githubusercontent.com/u/56664851" alt="RPiList" height="100" />
+  <img src="https://emojicdn.elk.sh/🤝" alt="Handshake" height="50" />
+  <img src="https://github.com/home-assistant/brands/blob/master/core_integrations/pi_hole/icon.png?raw=true" alt="Pi-hole" height="100" />
+  <img src="https://emojicdn.elk.sh/🤝" alt="Handshake" height="50" />
+  <img src="https://avatars.githubusercontent.com/u/8418678" alt="pihole-updatelists" height="100" />
+  <img src="https://emojicdn.elk.sh/🤝" alt="Handshake" height="50" />
+  <img src="https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/logo-81x112.png" alt="Proxmox VE Helper-Scripts" height="100" />
+  <img src="https://emojicdn.elk.sh/🤝" alt="Handshake" height="50" />
+  <img src="https://avatars.githubusercontent.com/u/2678585" alt="Proxmox" height="100" />
 </div>
 
 A project to simplify the installation of [Pi-hole](https://pi-hole.net/) in an LXC container on Proxmox, automatically extended with lists from [RPiList/specials](https://github.com/RPiList/specials) and [Firebog](https://v.firebog.net/hosts/lists.php).
