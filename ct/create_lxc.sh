@@ -4,7 +4,7 @@
 # Copyright (c) 2024 mschabhuettl
 # Author: tteck (tteckster), mschabhuettl
 # License: MIT
-# https://github.com/mschabhuettl/SVPiHoleLXC/raw/main/LICENSE
+# https://github.com/mschabhuettl/PiBlockLXC/raw/main/LICENSE
 
 # This sets verbose mode if the global variable is set to "yes"
 # if [ "$VERBOSE" == "yes" ]; then set -x; fi
@@ -120,7 +120,7 @@ function select_storage() {
   else
     local STORAGE
     while [ -z "${STORAGE:+x}" ]; do
-      STORAGE=$(whiptail --backtitle "SVPiHoleLXC" --title "Storage Pools" --radiolist \
+      STORAGE=$(whiptail --backtitle "PiBlockLXC" --title "Storage Pools" --radiolist \
       "Which storage pool you would like to use for the ${CONTENT_LABEL,,}?\nTo make a selection, use the Spacebar.\n" \
       16 $(($MSG_MAX_LENGTH + 23)) 6 \
       "${MENU[@]}" 3>&1 1>&2 2>&3) || exit "Menu aborted."

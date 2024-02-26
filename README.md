@@ -1,4 +1,4 @@
-# SVPiHoleLXC - Pi-hole LXC with RPiList and Firebog Lists
+# PiBlockLXC - Pi-hole LXC with RPiList and Firebog Lists
 
 <div align="center">
   <img src="https://avatars.githubusercontent.com/u/56664851" alt="RPiList" height="100" />
@@ -37,7 +37,7 @@ This project builds on the helper scripts from [tteck/Proxmox](https://github.co
 To create a new Proxmox VE Pi-hole LXC, execute the following command in the Proxmox VE Shell:
 
 ```bash
-bash -c "$(wget -qLO - https://github.com/mschabhuettl/SVPiHoleLXC/raw/main/ct/svpihole.sh)"
+bash -c "$(wget -qLO - https://github.com/mschabhuettl/PiBlockLXC/raw/main/ct/piblocklxc.sh)"
 ```
 
 ### ⚡ Default Settings
@@ -68,7 +68,7 @@ To avoid any conflicts with the default Pi-hole update tasks and to tailor the u
 
 #### Setting up pihole-updatelists Configuration
 
-For pihole-updatelists to function correctly, a specific configuration file is required. The script facilitates this by downloading a [pre-configured configuration file](https://raw.githubusercontent.com/mschabhuettl/SVPiHoleLXC/main/config/pihole-updatelists.conf) from this repository. This file contains settings that dictate which remote sources to use for updating Pi-hole's lists, effectively streamlining the setup process and ensuring that pihole-updatelists is ready to operate with minimal user intervention.
+For pihole-updatelists to function correctly, a specific configuration file is required. The script facilitates this by downloading a [pre-configured configuration file](https://raw.githubusercontent.com/mschabhuettl/PiBlockLXC/main/config/pihole-updatelists.conf) from this repository. This file contains settings that dictate which remote sources to use for updating Pi-hole's lists, effectively streamlining the setup process and ensuring that pihole-updatelists is ready to operate with minimal user intervention.
 
 #### Executing the Initial List Update
 
@@ -109,7 +109,7 @@ Feedback, suggestions, and contributions are welcome! If you'd like to help impr
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/mschabhuettl/SVPiHoleLXC/blob/main/LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/mschabhuettl/PiBlockLXC/blob/main/LICENSE) file for details.
 
 Pi-hole® is a registered trademark of Pi-hole LLC.  
 Proxmox® is a registered trademark of Proxmox Server Solutions GmbH.  

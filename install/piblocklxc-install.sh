@@ -4,7 +4,7 @@
 # Copyright (c) 2024 mschabhuettl
 # Author: tteck (tteckster), mschabhuettl
 # License: MIT
-# https://github.com/mschabhuettl/SVPiHoleLXC/raw/main/LICENSE
+# https://github.com/mschabhuettl/PiBlockLXC/raw/main/LICENSE
 
 source /dev/stdin <<< "$FUNCTIONS_FILE_PATH"
 color
@@ -133,7 +133,7 @@ if [[ -z "$prompt" || ${prompt,,} =~ ^(y|yes)$ ]]; then
   systemctl restart pihole-FTL.service
   
   # Downloading the configuration file for pihole-updatelists
-  wget -O /etc/pihole-updatelists.conf https://raw.githubusercontent.com/mschabhuettl/SVPiHoleLXC/main/config/pihole-updatelists.conf
+  wget -O /etc/pihole-updatelists.conf https://raw.githubusercontent.com/mschabhuettl/PiBlockLXC/main/config/pihole-updatelists.conf
   
   # Cleaning up the gravity database by removing all adlists, domain lists, and their group associations
   sqlite3 /etc/pihole/gravity.db "DELETE FROM adlist"

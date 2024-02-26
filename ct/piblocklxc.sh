@@ -1,25 +1,25 @@
 #!/usr/bin/env bash
-source <(curl -s https://raw.githubusercontent.com/mschabhuettl/SVPiHoleLXC/main/misc/build.func)
+source <(curl -s https://raw.githubusercontent.com/mschabhuettl/PiBlockLXC/main/misc/build.func)
 # Copyright (c) 2021-2024 tteck
 # Copyright (c) 2024 mschabhuettl
 # Author: tteck (tteckster), mschabhuettl
 # License: MIT
-# https://github.com/mschabhuettl/SVPiHoleLXC/raw/main/LICENSE
+# https://github.com/mschabhuettl/PiBlockLXC/raw/main/LICENSE
 
 function header_info {
 clear
 cat <<"EOF"
-   ______    ______  _       __  ______  __    ______
-  / ___/ |  / / __ \(_)     / / / / __ \/ /   / ____/
-  \__ \| | / / /_/ / /_____/ /_/ / / / / /   / __/   
- ___/ /| |/ / ____/ /_____/ __  / /_/ / /___/ /___   
-/____/ |___/_/   /_/     /_/ /_/\____/_____/_____/   
- 
+    ____  _ ____  __           __   __   _  ________
+   / __ \(_) __ )/ /___  _____/ /__/ /  | |/ / ____/
+  / /_/ / / __  / / __ \/ ___/ //_/ /   |   / /     
+ / ____/ / /_/ / / /_/ / /__/ ,< / /___/   / /___   
+/_/   /_/_____/_/\____/\___/_/|_/_____/_/|_\____/   
+
 EOF
 }
 header_info
 echo -e "Loading..."
-APP="SVPihole"
+APP="PiBlockLXC"
 var_disk="16"
 var_cpu="2"
 var_ram="1024"
