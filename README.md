@@ -105,29 +105,27 @@ For automatic list updates via `pihole-updatelists`, you'll find the configurati
 
 Feedback, suggestions, and contributions are welcome! If you'd like to help improve this project, please feel free to create issues or pull requests. Your input is valuable, and I appreciate any contributions you can make. Thank you for considering helping out!
 
-## Whitelist Integration
+## Customizing Your Whitelist and Blacklist
 
-This project incorporates comprehensive blocklists from [RPiList/specials](https://github.com/RPiList/specials) and [Firebog](https://v.firebog.net/hosts/lists.php), as well as integrating whitelists to ensure a balanced internet experience. We leverage the robust whitelists from both [anudeepND/whitelist](https://github.com/anudeepND/whitelist) and [RPiList](https://github.com/RPiList/specials), combining them to create a more nuanced approach to blocking and allowing content.
+Enhancing the balance between security and accessibility on your network involves meticulous curation of both blacklists and whitelists. This project integrates these lists to filter out unwanted content while ensuring access to necessary resources. Here's how to tailor these lists to fit your specific needs:
 
-### Integrated Whitelists
+### Integrated Lists
 
-- The [anudeepND/whitelist](https://github.com/anudeepND/whitelist) offers a well-maintained collection of domains that are commonly whitelisted by users around the globe. These domains are often necessary for everyday internet use, ensuring that essential services and websites are not inadvertently blocked by the Pi-hole.
-  
-- Similarly, RPiList provides whitelists tailored to enhance user experience by preventing the blocking of websites that are known to be safe and necessary for a seamless internet experience. This includes domains that are often mistakenly caught by broad blocklists but are crucial for various online activities.
+- **Blacklists**: We incorporate comprehensive blacklists from sources such as RPiList/specials, Firebog, and StevenBlack. These lists are designed to block ads, trackers, malware, and other undesirable content, providing a cleaner and safer internet experience.
 
-By integrating these whitelists, our project aims to strike a perfect balance between protecting against ads, trackers, and malicious sites, while ensuring that vital and frequently used websites remain accessible. This approach minimizes the need for manual whitelist modifications, providing a more convenient and user-friendly setup.
+- **Whitelists**: To maintain access to essential and commonly used domains, whitelists from [anudeepND/whitelist](https://github.com/anudeepND/whitelist) and RPiList are integrated. These ensure that important services remain uninterrupted.
 
-### Customizing Your Whitelist
+### Customizing Lists
 
-Users who wish to customize their experience further have the option to remove any of the integrated whitelists from their `pihole-updatelists.conf`. This flexibility allows you to tailor the blocking and allowing of content according to your specific needs and preferences.
+You have the flexibility to customize these lists to match your internet usage patterns and preferences by adding or removing entries in your `pihole-updatelists.conf`.
 
-To remove a whitelist, simply edit the `pihole-updatelists.conf` file and remove the corresponding URL for the whitelist you no longer wish to include. After making your changes, it is essential to run `pihole-updatelists` to apply the updates. This step ensures that your Pi-hole setup reflects your personal or organizational internet usage policies, providing a customizable layer of internet security and convenience.
+1. **Editing Lists**: Access your `pihole-updatelists.conf` file to modify the URLs for blacklist or whitelist entries. This allows you to remove lists you find unnecessary or add new ones that better align with your needs.
+
+2. **Applying Changes**: It's essential to run `pihole-updatelists` after making any changes to ensure your Pi-hole configuration accurately reflects your customizations. This step is crucial for the effective application of your personalized content filtering settings.
 
 ### Conclusion
 
-The combination of these two whitelists represents a comprehensive effort to refine the filtering capabilities of Pi-hole, ensuring that while unwanted content is blocked, the internet remains open and accessible for the essential and safe sites users rely on. This balanced approach is crucial for a practical and frustration-free browsing experience.
-
-Integrating and, if necessary, customizing these whitelists exemplifies our commitment to delivering a refined and effective ad-blocking setup, making it easier for users to enjoy a safe, fast, and unencumbered internet experience.
+Tailoring your whitelist and blacklist provides a proactive approach to managing internet content, striking an optimal balance between safeguarding your network and ensuring seamless access to legitimate websites. By fine-tuning these lists, you can enhance your online experience, prioritizing both security and functionality to meet your unique needs.
 
 ## Acknowledgements
 
