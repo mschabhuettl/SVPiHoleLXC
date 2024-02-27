@@ -3,7 +3,7 @@
     <img src="https://raw.githubusercontent.com/mschabhuettl/PiBlockLXC/main/misc/images/logo.png" height="150px" />
  </a>
 </div>
-<h1 align="center">PiBlockLXC - Pi-hole LXC with RPiList and Firebog Lists</h1>
+<h1 align="center">PiBlockLXC - Advanced Pi-hole LXC with RPiList and Comprehensive Enhancements</h1>
 
 <div align="center">
   <img src="https://avatars.githubusercontent.com/u/56664851" alt="RPiList" height="100" />
