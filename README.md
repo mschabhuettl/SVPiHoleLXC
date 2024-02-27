@@ -107,19 +107,19 @@ Enhancing the balance between security and accessibility on your network involve
 
 ### Integrated Lists
 
-- **Blacklists**: We incorporate comprehensive blacklists from sources such as [RPiList/specials](https://github.com/RPiList/specials), [Firebog](https://v.firebog.net/hosts/lists.php), and [StevenBlack](https://github.com/StevenBlack/hosts). These lists are designed to block ads, trackers, malware, and other undesirable content, providing a cleaner and safer internet experience.
+- **Blacklists**: We incorporate comprehensive blacklists from sources such as [RPiList/specials](https://github.com/RPiList/specials), [Firebog](https://v.firebog.net/hosts/lists.php?type=all), and [StevenBlack](https://github.com/StevenBlack/hosts), ensuring robust protection against intrusive ads, trackers, and malicious sites.
 
-- **Whitelists**: To maintain access to essential and commonly used domains, whitelists from [anudeepND/whitelist](https://github.com/anudeepND/whitelist) and [RPiList/specials](https://github.com/RPiList/specials) are integrated. These ensure that important services remain uninterrupted.
+- **Whitelists**: To maintain access to essential and commonly used domains, whitelists from [anudeepND/whitelist](https://github.com/anudeepND/whitelist) and [RPiList/specials](https://github.com/RPiList/specials) are used. These lists are curated to minimize the chances of blocking legitimate websites, ensuring a seamless browsing experience.
 
 <details>
 <summary><b>Optional Whitelist URLs</b></summary>
 
-For users who require specific functionalities from services like Slickdeals, Fatwallet, or similar platforms, it may be necessary to whitelist certain domains that are generally classified as trackers or ads. anudeepND provides lists that include domains essential for these services to operate correctly. Including these URLs in your `WHITELIST_URL` section can enhance your browsing experience by ensuring these services work without interruption. However, be aware that these lists might contain domains typically considered undesirable (e.g., tracking or advertising domains). Use them judiciously based on your needs.
+For users who require specific functionalities from services like Slickdeals, Fatwallet, or similar platforms, it may be necessary to whitelist certain domains that are generally classified as trackers or ads. Here are additional lists from anudeepND that can be included in your `WHITELIST_URL` section if needed:
 
-- **Referral Sites**: Contains analytics and advertisement domains that need to be whitened to ensure services like Slickdeals and Fatwallet function correctly.
+- **Referral Sites**: People who use services like Slickdeals and Fatwallet need a few sites (most of them are either trackers or ads) to be whitelisted to work properly. This file contains some analytics and ad serving sites like doubleclick.net and others. If you don't know what these services are, stay away from this list.
   - URL: `https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/referral-sites.txt`
 
-- **Optional List**: Includes domains that may be necessary for the proper functioning of specific services you use. This list may contain tracking sites, but sometimes it's necessary to whitelist such domains.
+- **Optional List**: This file contains domains that are needed to be whitelisted depending on the service you use. It may contain some tracking sites, but sometimes it's necessary to add bad domains to make a few services work. Currently, there is no script for this list, you have to add domains manually to your Pi-Hole.
   - URL: `https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/optional-list.txt`
 
 To include these lists, add their URLs to the `WHITELIST_URL` section of your `pihole-updatelists.conf` file. Remember, you can always remove these entries if you find them unnecessary for your usage or if you prefer to minimize exposure to tracking and ads.
