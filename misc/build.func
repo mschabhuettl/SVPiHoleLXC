@@ -573,7 +573,7 @@ description() {
   IP=$(pct exec "$CTID" ip a s dev eth0 | awk '/inet / {print $2}' | cut -d/ -f1)
   pct set "$CTID" -description "<div align='center'><a href='https://github.com/mschabhuettl/PiBlockLXC' target='_blank' rel='noopener noreferrer'><img src='https://raw.githubusercontent.com/mschabhuettl/PiBlockLXC/main/misc/images/logo-90x112.png'/></a>
 
-  # ${APP} LXC
+  # ${APP}
   </div>"
   if [[ -f /etc/systemd/system/ping-instances.service ]]; then
     systemctl start ping-instances.service
