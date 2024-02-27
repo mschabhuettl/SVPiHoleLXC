@@ -126,13 +126,15 @@ To include these lists, add their URLs to the `WHITELIST_URL` section of your `p
 
 </details>
 
-### Customizing Lists
+### Configuring `pihole-updatelists.conf`
 
-You have the flexibility to customize these lists to match your internet usage patterns and preferences by adding or removing entries in your `pihole-updatelists.conf`.
+For detailed customization of your filter lists, we recommend reviewing the `pihole-updatelists.conf` configuration file. In this file, you'll find the URLs for the blacklists and whitelists, which you can adjust as needed. You can add lists that are relevant to your specific requirements or remove those you do not need.
 
-1. **Editing Lists**: Access your `pihole-updatelists.conf` file to modify the URLs for blacklist or whitelist entries. This allows you to remove lists you find unnecessary or add new ones that better align with your needs.
+- **Adding/Removing Lists**: Directly insert URLs for additional lists into the `pihole-updatelists.conf` or remove entries that are not needed. This gives you full control over the content that is filtered or allowed.
 
-2. **Applying Changes**: It's essential to run `pihole-updatelists` after making any changes to ensure your Pi-hole configuration accurately reflects your customizations. This step is crucial for the effective application of your personalized content filtering settings.
+- **Updating Lists**: After making changes to the `pihole-updatelists.conf`, please execute `pihole-updatelists` to apply your adjustments and update the lists accordingly.
+
+This flexibility allows you to create a Pi-hole experience tailored to your needs by ensuring that only the content you want is filtered.
 
 ### Conclusion
 
