@@ -101,19 +101,15 @@ After installation, you can customize the configuration of Pi-hole via its web i
 
 For automatic list updates via `pihole-updatelists`, you'll find the configuration file at `/etc/pihole-updatelists.conf`.
 
-## Support and Contributions
-
-Feedback, suggestions, and contributions are welcome! If you'd like to help improve this project, please feel free to create issues or pull requests. Your input is valuable, and I appreciate any contributions you can make. Thank you for considering helping out!
-
 ## Customizing Your Whitelist and Blacklist
 
 Enhancing the balance between security and accessibility on your network involves meticulous curation of both blacklists and whitelists. This project integrates these lists to filter out unwanted content while ensuring access to necessary resources. Here's how to tailor these lists to fit your specific needs:
 
 ### Integrated Lists
 
-- **Blacklists**: We incorporate comprehensive blacklists from sources such as RPiList/specials, Firebog, and StevenBlack. These lists are designed to block ads, trackers, malware, and other undesirable content, providing a cleaner and safer internet experience.
+- **Blacklists**: We incorporate comprehensive blacklists from sources such as [RPiList/specials](https://github.com/RPiList/specials), [Firebog](https://v.firebog.net/hosts/lists.php), and [StevenBlack](https://github.com/StevenBlack/hosts). These lists are designed to block ads, trackers, malware, and other undesirable content, providing a cleaner and safer internet experience.
 
-- **Whitelists**: To maintain access to essential and commonly used domains, whitelists from [anudeepND/whitelist](https://github.com/anudeepND/whitelist) and RPiList are integrated. These ensure that important services remain uninterrupted.
+- **Whitelists**: To maintain access to essential and commonly used domains, whitelists from [anudeepND/whitelist](https://github.com/anudeepND/whitelist) and [RPiList/specials](https://github.com/RPiList/specials) are integrated. These ensure that important services remain uninterrupted.
 
 ### Customizing Lists
 
@@ -126,6 +122,10 @@ You have the flexibility to customize these lists to match your internet usage p
 ### Conclusion
 
 Tailoring your whitelist and blacklist provides a proactive approach to managing internet content, striking an optimal balance between safeguarding your network and ensuring seamless access to legitimate websites. By fine-tuning these lists, you can enhance your online experience, prioritizing both security and functionality to meet your unique needs.
+
+## Support and Contributions
+
+Feedback, suggestions, and contributions are welcome! If you'd like to help improve this project, please feel free to create issues or pull requests. Your input is valuable, and I appreciate any contributions you can make. Thank you for considering helping out!
 
 ## Acknowledgements
 
