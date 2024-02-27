@@ -105,12 +105,21 @@ For automatic list updates via `pihole-updatelists`, you'll find the configurati
 
 Feedback, suggestions, and contributions are welcome! If you'd like to help improve this project, please feel free to create issues or pull requests. Your input is valuable, and I appreciate any contributions you can make. Thank you for considering helping out!
 
+## Whitelist Integration
+
+In addition to the comprehensive blocklists from [RPiList/specials](https://github.com/RPiList/specials) and [Firebog](https://v.firebog.net/hosts/lists.php), this project also integrates the [anudeepND/whitelist](https://github.com/anudeepND/whitelist). This robust collection features commonly whitelisted websites gathered from a variety of sources, including the Pi-Hole subreddit, Pi-Hole forum, Pi-Hole GitHub repository, and more.
+
+The inclusion of `anudeepND/whitelist` ensures that while our setup aims to block ads, trackers, and potentially harmful websites, it also maintains access to essential and frequently used websites that are considered safe and necessary for a seamless internet experience. This balance between blocking unwanted content and allowing useful sites is crucial for a practical and frustration-free browsing experience.
+
+By utilizing `anudeepND/whitelist`, we further tailor the Pi-hole setup to meet the nuanced needs of users, ensuring that important websites are not inadvertently blocked, thereby reducing the need for manual whitelist modifications.
+
 ## Acknowledgements
 
 - [tteck/Proxmox](https://github.com/tteck/Proxmox) for the foundational Proxmox helper scripts.
 - [RPiList/specials](https://github.com/RPiList/specials) for the comprehensive lists protecting against fake shops and more.
 - [Firebog](https://v.firebog.net/hosts/lists.php) for the curated blocklists.
 - [jacklul/pihole-updatelists](https://github.com/jacklul/pihole-updatelists) for the script enabling automatic list updates.
+- **[anudeepND/whitelist](https://github.com/anudeepND/whitelist)** for offering a robust collection of commonly whitelisted websites, ensuring essential and frequently used sites remain accessible, contributing to a balanced and efficient ad-blocking setup.
 
 ## Logo Acknowledgement
 
