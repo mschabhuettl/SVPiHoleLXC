@@ -162,6 +162,6 @@ Warum eine Katze? In der Ära des digitalen Zeitalters überschreiten Katzen ihr
 
 Dieses Projekt ist unter der MIT-Lizenz lizenziert - siehe die [LICENSE](https://github.com/mschabhuettl/PiBlockLXC/blob/main/LICENSE)-Datei für Details.
 
-Pi-hole® ist ein eingetragenes Warenzeichen von Pi-hole LLC.
-Proxmox® ist ein eingetragenes Warenzeichen von Proxmox Server Solutions GmbH.
+Pi-hole® ist ein eingetragenes Warenzeichen von Pi-hole LLC.  
+Proxmox® ist ein eingetragenes Warenzeichen von Proxmox Server Solutions GmbH.  
 Dieses Projekt steht in keiner Verbindung mit Pi-hole oder Proxmox.
