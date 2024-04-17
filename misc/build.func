@@ -518,7 +518,11 @@ build_container() {
 
   TEMP_DIR=$(mktemp -d)
   pushd $TEMP_DIR >/dev/null
-  export FUNCTIONS_FILE_PATH="$(curl -s https://raw.githubusercontent.com/mschabhuettl/PiBlockLXC/main/misc/install.func)"
+  if [ "$var_os" == "alpine" ]; then
+    export FUNCTIONS_FILE_PATH="$(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/alpine-install.func)"
+  else
+    export FUNCTIONS_FILE_PATH="$(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/install.func)"
+  fi
   export CACHER="$APT_CACHER"
   export CACHER_IP="$APT_CACHER_IP"
   export tz="$timezone"
@@ -565,6 +569,9 @@ lxc.mount.entry: /dev/ttyACM1       dev/ttyACM1       none bind,optional,create=
 EOF
   fi
 
+  if [ "$CT_TYPE" == "0" ]; then
+    if [[ "$APP" == "Channels" || "$APP" == "Emby" || "$APP" == "Frigate" || "$APP" == "Jellyfin" || "$APP" == "Plex" || "$APP" == "Scrypted" || "$APP" == "Tdarr" || "$APP" == "Unmanic" ]]; then
+      cat <<EOF >>$LXC_CONFIG
 # VAAPI hardware transcoding
 lxc.cgroup2.devices.allow: c 226:0 rwm
 lxc.cgroup2.devices.allow: c 226:128 rwm
@@ -595,7 +602,7 @@ EOF'
 # This function sets the description of the container.
 description() {
   IP=$(pct exec "$CTID" ip a s dev eth0 | awk '/inet / {print $2}' | cut -d/ -f1)
-  pct set "$CTID" -description "<div align='center'><a href='https://github.com/mschabhuettl/PiBlockLXC' target='_blank' rel='noopener noreferrer'><img src='https://raw.githubusercontent.com/mschabhuettl/PiBlockLXC/main/misc/images/logo-90x112.png'/></a>
+  pct set "$CTID" -description "<div align='center'><a href='https://Helper-Scripts.com' target='_blank' rel='noopener noreferrer'><img src='https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/logo-81x112.png'/></a>
 
   # ${APP}
   </div>"
