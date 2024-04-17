@@ -71,8 +71,19 @@ msg_error() {
   echo -e "${BFR} ${CROSS} ${RD}${msg}${CL}"
 }
 
+# Check if the shell is using bash
+shell_check() {
+  if [[ "$(basename "$SHELL")" != "bash" ]]; then
+    clear
+    msg_error "Your default shell is currently not set to Bash. To use these scripts, please switch to the Bash shell."
+    echo -e "\nExiting..."
+    sleep 2
+    exit
+  fi
+}
+
 # Run as root only
-check_root() {
+root_check() {
   if [[ "$(id -u)" -ne 0 || $(ps -o comm= -p $PPID) == "sudo" ]]; then
     clear
     msg_error "Please run this script as root."
@@ -108,14 +119,13 @@ arch_check() {
 
 # This function checks if the script is running through SSH and prompts the user to confirm if they want to proceed or exit.
 ssh_check() {
-  if command -v pveversion >/dev/null 2>&1; then
-    if [ -n "${SSH_CLIENT:+x}" ]; then
-      if whiptail --backtitle "PiBlockLXC" --defaultno --title "SSH DETECTED" --yesno "It's suggested to use the Proxmox shell instead of SSH, since SSH can create issues while gathering variables. Would you like to proceed with using SSH?" 10 62; then
-        echo "you've been warned"
-      else
-        clear
-        exit
-      fi
+  if command -v pveversion >/dev/null 2>&1 && [ -n "${SSH_CLIENT:+x}" ]; then
+    if whiptail --backtitle "PiBlockLXC" --defaultno --title "SSH DETECTED" --yesno "It's advisable to utilize the Proxmox shell rather than SSH, as there may be potential complications with variable retrieval. Proceed using SSH?" 10 72; then
+      whiptail --backtitle "PiBlockLXC" --msgbox --title "Proceed using SSH" "You've chosen to proceed using SSH. If any issues arise, please run the script in the Proxmox shell before creating a repository issue." 10 72
+    else
+      clear
+      echo "Exiting due to SSH usage. Please consider using the Proxmox shell."
+      exit
     fi
   fi
 }
@@ -157,19 +167,21 @@ exit-script() {
 advanced_settings() {
   whiptail --backtitle "PiBlockLXC" --msgbox --title "Here is an instructional tip:" "To make a selection, use the Spacebar." 8 58
   whiptail --backtitle "PiBlockLXC" --msgbox --title "Default distribution for $APP" "${var_os} ${var_version} \n \nIf the default Linux distribution is not adhered to, script support will be discontinued. \n" 10 58
-  var_os=""
-  while [ -z "$var_os" ]; do
-    if var_os=$(whiptail --backtitle "PiBlockLXC" --title "DISTRIBUTION" --radiolist "Choose Distribution:" 10 58 2 \
-      "debian" "" OFF \
-      "ubuntu" "" OFF \
-      3>&1 1>&2 2>&3); then
-      if [ -n "$var_os" ]; then
-        echo -e "${DGN}Using Distribution: ${BGN}$var_os${CL}"
+  if [ "$var_os" != "alpine" ]; then
+    var_os=""
+    while [ -z "$var_os" ]; do
+      if var_os=$(whiptail --backtitle "PiBlockLXC" --title "DISTRIBUTION" --radiolist "Choose Distribution:" 10 58 2 \
+        "debian" "" OFF \
+        "ubuntu" "" OFF \
+        3>&1 1>&2 2>&3); then
+        if [ -n "$var_os" ]; then
+          echo -e "${DGN}Using Distribution: ${BGN}$var_os${CL}"
+        fi
+      else
+        exit-script
       fi
-    else
-      exit-script
-    fi
-  done
+    done
+  fi
 
   if [ "$var_os" == "debian" ]; then
     var_version=""
@@ -193,7 +205,7 @@ advanced_settings() {
       if var_version=$(whiptail --backtitle "PiBlockLXC" --title "UBUNTU VERSION" --radiolist "Choose Version" 10 58 3 \
         "20.04" "Focal" OFF \
         "22.04" "Jammy" OFF \
-        "23.04" "Lunar" OFF \
+        "23.10" "Mantic" OFF \
         3>&1 1>&2 2>&3); then
         if [ -n "$var_version" ]; then
           echo -e "${DGN}Using $var_os Version: ${BGN}$var_version${CL}"
@@ -338,11 +350,16 @@ advanced_settings() {
     echo -e "${DGN}Using Gateway IP Address: ${BGN}Default${CL}"
   fi
 
-  if APT_CACHER_IP=$(whiptail --backtitle "PiBlockLXC" --inputbox "Set APT-Cacher IP (leave blank for default)" 8 58 --title "APT-Cacher IP" 3>&1 1>&2 2>&3); then
-    APT_CACHER="${APT_CACHER_IP:+yes}"
-    echo -e "${DGN}Using APT-Cacher IP Address: ${BGN}${APT_CACHER_IP:-Default}${CL}"
+  if [ "$var_os" == "alpine" ]; then
+    APT_CACHER=""
+    APT_CACHER_IP=""
   else
-    exit-script
+    if APT_CACHER_IP=$(whiptail --backtitle "PiBlockLXC" --inputbox "Set APT-Cacher IP (leave blank for default)" 8 58 --title "APT-Cacher IP" 3>&1 1>&2 2>&3); then
+      APT_CACHER="${APT_CACHER_IP:+yes}"
+      echo -e "${DGN}Using APT-Cacher IP Address: ${BGN}${APT_CACHER_IP:-Default}${CL}"
+    else
+      exit-script
+    fi
   fi
 
   if (whiptail --backtitle "PiBlockLXC" --defaultno --title "IPv6" --yesno "Disable IPv6?" 10 58); then
@@ -443,10 +460,12 @@ advanced_settings() {
 }
 
 install_script() {
-  check_root
-  ssh_check
-  arch_check
   pve_check
+  shell_check
+  root_check
+  arch_check
+  ssh_check
+
   if systemctl is-active -q ping-instances.service; then
     systemctl -q stop ping-instances.service
   fi
@@ -546,9 +565,6 @@ lxc.mount.entry: /dev/ttyACM1       dev/ttyACM1       none bind,optional,create=
 EOF
   fi
 
-  if [ "$CT_TYPE" == "0" ]; then
-    if [[ "$APP" == "Channels" || "$APP" == "Emby" || "$APP" == "Jellyfin" || "$APP" == "Plex" || "$APP" == "Scrypted" || "$APP" == "Tdarr" || "$APP" == "Unmanic" ]]; then
-      cat <<EOF >>$LXC_CONFIG
 # VAAPI hardware transcoding
 lxc.cgroup2.devices.allow: c 226:0 rwm
 lxc.cgroup2.devices.allow: c 226:128 rwm
