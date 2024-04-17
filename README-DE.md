@@ -69,7 +69,7 @@ Dieser Schritt ist entscheidend für die Automatisierung der Aktualisierung Ihre
 
 #### Zeitplan-Konfiguration und Systemüberschreibungen
 
-Um Konflikte mit den Standard-Pi-hole-Updateaufgaben zu vermeiden und die Updatefrequenz für Ihre Umgebung anzupassen, richtet das Skript einen benutzerdefinierten Zeitplan für `pihole-updatelists` ein. Speziell wird Pi-hole's eingebautes UpdateGravity-Job im Crontab deaktiviert, um Überschneidungen zu vermeiden. Dann wird ein täglicher Trigger für `pihole-updatelists` um 03:00 Uhr morgens eingerichtet, um sicherzustellen, dass Listenaktualisierungen nicht während der Hauptzeiten verarbeitet werden, um mögliche Auswirkungen auf die Leistung Ihres Netzwerks zu minimieren.
+Um Konflikte mit den Standard-Pi-hole-Updateaufgaben zu vermeiden und die Updatefrequenz für Ihre Umgebung anzupassen, richtet das Skript einen benutzerdefinierten Zeitplan für `pihole-updatelists` ein. Speziell wird Pi-hole's eingebautes UpdateGravity-Job im Crontab deaktiviert, um Überschneidungen zu vermeiden. Dann wird ein täglicher Trigger für `pihole-updatelists` um 03:00 Uhr morgens eingerichtet, um sicherzustellen, dass Listenaktualisierungen nicht während den Hauptzeiten verarbeitet werden, um mögliche Auswirkungen auf die Leistung Ihres Netzwerks zu minimieren.
 
 #### Einrichtung der pihole-updatelists Konfiguration
 
