@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-source <(curl -s https://raw.githubusercontent.com/mschabhuettl/PiBlockLXC/main/misc/build.func)
+source <(curl -s https://raw.githubusercontent.com/nathankooistra/PiBlockLXC/main/misc/build.func)
 # Copyright (c) 2021-2024 tteck
 # Copyright (c) 2024 mschabhuettl
 # Author: tteck (tteckster), mschabhuettl
