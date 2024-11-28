@@ -112,7 +112,7 @@ if [[ -z "$prompt" || ${prompt,,} =~ ^(y|yes)$ ]]; then
   $STD apt-get install -y php-cli php-sqlite3 php-intl php-curl sqlite3
   
   # Downloading and executing the installation script for pihole-updatelists
-  wget -O - https://raw.githubusercontent.com/jacklul/pihole-updatelists/master/install.sh | bash
+  wget -O - https://raw.githubusercontent.com/jacklul/pihole-updatelists/master/install.sh | bash -s systemd
   
   # Disabling pihole's default updateGravity job in the cron.d/pihole to prevent conflicts
   sed -e '/pihole updateGravity/ s/^#*/#/' -i /etc/cron.d/pihole
