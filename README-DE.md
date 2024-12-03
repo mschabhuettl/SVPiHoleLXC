@@ -21,12 +21,12 @@ Ein Projekt zur Vereinfachung der Installation von [Pi-hole](https://pi-hole.net
 
 ## Über das Projekt
 
-Dieses Projekt baut auf den Hilfsskripten von [tteck/Proxmox](https://github.com/tteck/Proxmox) auf und erweitert sie automatisch um Listen von [RPiList/specials](https://github.com/RPiList/specials) und [Firebog](https://v.firebog.net/hosts/lists.php). Ziel ist es, die Einrichtung eines Pi-hole LXC-Containers auf einem Proxmox-Server zu vereinfachen, indem eine Auswahl an Blocklisten für Werbung, Tracking und potenziell schädliche Websites zur Pi-hole-Basisinstallation hinzugefügt wird.
+Dieses Projekt basiert auf den Hilfsskripten des verstorbenen [tteck/Proxmox](https://github.com/tteck/Proxmox), dessen Arbeit die Grundlage für die Erstellung von LXC-Containern auf Proxmox legte. Nach seinem Tod wurden die Proxmox-Hilfsskripte als Community-Projekt unter [community-scripts/ProxmoxVE](https://github.com/community-scripts/ProxmoxVE) weitergeführt. Dieses Projekt erweitert die ursprünglichen Skripte, indem es Listen von [RPiList/specials](https://github.com/RPiList/specials) und [Firebog](https://v.firebog.net/hosts/lists.php) integriert. Ziel ist es, die Einrichtung eines Pi-hole LXC-Containers auf einem Proxmox-Server zu vereinfachen, indem eine kuratierte Auswahl an Blocklisten für Werbung, Tracking und potenziell schädliche Webseiten zur Pi-hole-Basisinstallation hinzugefügt wird.
 
 ## Funktionen
 
-- Verwendet das Grundskript von [tteck](https://github.com/tteck/Proxmox) zur Erstellung von LXC.
-- Integriert automatisch Blocklisten von [RPiList/specials](https://github.com/RPiList/specials) und [Firebog](https://v.firebog.net/hosts/lists.php) durch [jacklul/pihole-updatelists](https://github.com/jacklul/pihole-updatelists).
+- Nutzt das grundlegende Skript von [community-scripts/ProxmoxVE](https://github.com/community-scripts/ProxmoxVE) zur Erstellung von LXC-Containern.
+- Integriert automatisch Blocklisten von [RPiList/specials](https://github.com/RPiList/specials) und [Firebog](https://v.firebog.net/hosts/lists.php) über [jacklul/pihole-updatelists](https://github.com/jacklul/pihole-updatelists).
 - Vereinfacht die Bereitstellung eines Pi-hole LXC-Containers mit vorkonfigurierten Blocklisten für verbesserten Netzwerkschutz.
 
 ## Pi-hole Übersicht
