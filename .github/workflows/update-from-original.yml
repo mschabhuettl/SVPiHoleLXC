@@ -16,17 +16,9 @@ jobs:
         with:
           ref: main # Use the main branch for testing
 
-      # Remove any leftover submodule configurations
-      - name: Cleanup Submodule Configurations
-        run: |
-          git submodule deinit -f --all || true
-          rm -f .gitmodules
-          git config --remove-section submodule || true
-
-      # Clone the original repository
+      # Clone the original repository into a temporary directory
       - name: Clone Original Repository
         run: |
-          echo "original-repo/" >> .gitignore # Ignore the cloned directory
           git clone --depth 1 https://github.com/community-scripts/ProxmoxVE original-repo
           rm -rf original-repo/.git          # Remove Git metadata to prevent submodule errors
 
@@ -68,35 +60,6 @@ jobs:
           sed -i 's/var_disk="2"/var_disk="16"/' ct/piblocklxc.sh
           sed -i 's/var_cpu="1"/var_cpu="2"/' ct/piblocklxc.sh
           sed -i 's/var_ram="512"/var_ram="1024"/' ct/piblocklxc.sh
-
-      # Modify install.func for MOTD
-      - name: Update MOTD in install.func
-        run: |
-          sed -i 's|echo -e "$APPLICATION LXC provided by https://helper-scripts.com/\\n"|echo -e "$APPLICATION LXC provided by https://github.com/mschabhuettl/PiBlockLXC/\\n"|g' misc/install.func
-
-      # Add pihole-updatelists logic in piblocklxc-install.sh
-      - name: Add Custom Logic to piblocklxc-install.sh
-        run: |
-          sed -i '/motd_ssh/i # Prompt user to decide whether to install pihole-updatelists' install/piblocklxc-install.sh
-          sed -i '/motd_ssh/i read -r -p "Would you like to add pihole-updatelists? <Y/n> " prompt' install/piblocklxc-install.sh
-          sed -i '/motd_ssh/i if [[ -z "$prompt" || ${prompt,,} =~ ^(y|yes)$ ]]; then' install/piblocklxc-install.sh
-          sed -i '/motd_ssh/i msg_info "Installing pihole-updatelists"' install/piblocklxc-install.sh
-          sed -i '/motd_ssh/i apt-get install -y php-cli php-sqlite3 php-intl php-curl sqlite3' install/piblocklxc-install.sh
-          sed -i '/motd_ssh/i wget -O - https://raw.githubusercontent.com/jacklul/pihole-updatelists/master/install.sh | bash -s systemd' install/piblocklxc-install.sh
-          sed -i '/motd_ssh/i sed -e "/pihole updateGravity/ s/^#*/#/\" -i /etc/cron.d/pihole' install/piblocklxc-install.sh
-          sed -i '/motd_ssh/i mkdir -p /etc/systemd/system/pihole-FTL.service.d' install/piblocklxc-install.sh
-          sed -i '/motd_ssh/i echo -e "[Service]\\nExecStartPre=-/bin/sh -c \\"[ -w /etc/cron.d/pihole ] && /bin/sed -e \\"/pihole updateGravity/ s/^#*/#/\\" -i /etc/cron.d/pihole\\"" > /etc/systemd/system/pihole-FTL.service.d/override.conf' install/piblocklxc-install.sh
-          sed -i '/motd_ssh/i mkdir -p /etc/systemd/system/pihole-updatelists.timer.d' install/piblocklxc-install.sh
-          sed -i '/motd_ssh/i echo -e "[Timer]\\nRandomizedDelaySec=5m\\nOnCalendar=*-*-* 03:00:00" > /etc/systemd/system/pihole-updatelists.timer.d/override.conf' install/piblocklxc-install.sh
-          sed -i '/motd_ssh/i systemctl daemon-reload' install/piblocklxc-install.sh
-          sed -i '/motd_ssh/i systemctl restart pihole-FTL.service' install/piblocklxc-install.sh
-          sed -i '/motd_ssh/i wget -O /etc/pihole-updatelists.conf https://raw.githubusercontent.com/mschabhuettl/PiBlockLXC/main/config/pihole-updatelists.conf' install/piblocklxc-install.sh
-          sed -i '/motd_ssh/i sqlite3 /etc/pihole/gravity.db "DELETE FROM adlist"' install/piblocklxc-install.sh
-          sed -i '/motd_ssh/i sqlite3 /etc/pihole/gravity.db "DELETE FROM adlist_by_group"' install/piblocklxc-install.sh
-          sed -i '/motd_ssh/i sqlite3 /etc/pihole/gravity.db "DELETE FROM domainlist"' install/piblocklxc-install.sh
-          sed -i '/motd_ssh/i sqlite3 /etc/pihole/gravity.db "DELETE FROM domainlist_by_group"' install/piblocklxc-install.sh
-          sed -i '/motd_ssh/i pihole-updatelists' install/piblocklxc-install.sh
-          sed -i '/motd_ssh/i fi' install/piblocklxc-install.sh
 
       # Commit changes and create a Pull Request
       - name: Commit and Create Pull Request
