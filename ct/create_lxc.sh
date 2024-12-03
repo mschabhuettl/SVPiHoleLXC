@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-# Copyright (c) 2021-2024 tteck
-# Copyright (c) 2024 mschabhuettl
+# Copyright (c) 2021-2024 tteck, mschabhuettl
 # Author: tteck (tteckster), mschabhuettl
 # License: MIT
 # https://github.com/mschabhuettl/PiBlockLXC/raw/main/LICENSE
@@ -18,7 +17,7 @@ CL=$(echo "\033[m")
 CM="${GN}✓${CL}"
 CROSS="${RD}✗${CL}"
 BFR="\\r\\033[K"
-HOLD="-"
+HOLD=" "
 
 # This sets error handling options and defines the error_handler function to handle errors
 set -Eeuo pipefail
@@ -37,13 +36,13 @@ function error_handler() {
 
 # This function displays a spinner.
 function spinner() {
-  printf "\e[?25l"
-  spinner="/-\\|/-\\|"
-  spin_i=0
-  while true; do
-    printf "\b%s" "${spinner:spin_i++%${#spinner}:1}"
-    sleep 0.1
-  done
+    local chars="/-\|"
+    local spin_i=0
+    printf "\e[?25l"
+    while true; do
+        printf "\r \e[36m%s\e[0m" "${chars:spin_i++%${#chars}:1}"
+        sleep 0.1
+    done
 }
 
 # This function displays an informational message with a yellow color.
