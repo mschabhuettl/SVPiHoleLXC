@@ -34,11 +34,11 @@ jobs:
       - name: Sync and Modify Files
         run: |
           mkdir -p ct install misc
-          cp original-repo/ct/create_lxc.sh ct/create_lxc.sh
-          cp original-repo/ct/pihole.sh ct/piblocklxc.sh
-          cp original-repo/install/pihole-install.sh install/piblocklxc-install.sh
-          cp original-repo/misc/build.func misc/build.func
-          cp original-repo/misc/install.func misc/install.func
+          cp tmp-original-repo/ct/create_lxc.sh ct/create_lxc.sh
+          cp tmp-original-repo/ct/pihole.sh ct/piblocklxc.sh
+          cp tmp-original-repo/install/pihole-install.sh install/piblocklxc-install.sh
+          cp tmp-original-repo/misc/build.func misc/build.func
+          cp tmp-original-repo/misc/install.func misc/install.func
 
       # Replace URLs, Backtitle, Author, Copyright, License, and DESCRIPTION
       - name: Update Files
