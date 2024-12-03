@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-# Copyright (c) 2021-2024 tteck
-# Copyright (c) 2024 mschabhuettl
+# Copyright (c) 2021-2024 tteck, mschabhuettl
 # Author: tteck (tteckster), mschabhuettl
 # License: MIT
 # https://github.com/mschabhuettl/PiBlockLXC/raw/main/LICENSE
@@ -45,12 +44,13 @@ msg_ok "Installed Pi-hole"
 
 read -r -p "Would you like to add Unbound? <y/N> " prompt
 if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
+  read -r -p "Unbound is configured as a recursive DNS server by default, would you like it to be configured as a forwarding DNS server (using DNS-over-TLS (DoT)) instead? <y/N> " prompt
   msg_info "Installing Unbound"
   $STD apt-get install -y unbound
   cat <<EOF >/etc/unbound/unbound.conf.d/pi-hole.conf
 server:
   verbosity: 0
-  interface: 0.0.0.0
+  interface: 127.0.0.1
   port: 5335
   do-ip6: no
   do-ip4: yes
@@ -74,7 +74,6 @@ server:
   infra-cache-slabs: 8
   key-cache-slabs: 8
   serve-expired: yes
-  root-hints: /var/lib/unbound/root.hints
   serve-expired-ttl: 3600
   edns-buffer-size: 1232
   prefetch: yes
@@ -95,8 +94,34 @@ EOF
   cat <<EOF >/etc/dnsmasq.d/99-edns.conf
 edns-packet-max=1232
 EOF
-  wget -qO /var/lib/unbound/root.hints https://www.internic.net/domain/named.root
-  sed -i -e 's/PIHOLE_DNS_1=8.8.8.8/PIHOLE_DNS_1=127.0.0.1#5335/' -e 's/PIHOLE_DNS_2=8.8.4.4/#PIHOLE_DNS_2=8.8.4.4/' /etc/pihole/setupVars.conf
+
+  if [[ ${prompt,,} =~ ^(y|yes)$ ]]; then
+    cat <<EOF >>/etc/unbound/unbound.conf.d/pi-hole.conf
+  tls-cert-bundle: "/etc/ssl/certs/ca-certificates.crt"
+forward-zone:
+  name: "."
+  forward-tls-upstream: yes
+  forward-first: no
+
+  forward-addr: 8.8.8.8@853#dns.google
+  forward-addr: 8.8.4.4@853#dns.google
+  forward-addr: 2001:4860:4860::8888@853#dns.google
+  forward-addr: 2001:4860:4860::8844@853#dns.google
+
+  #forward-addr: 1.1.1.1@853#cloudflare-dns.com
+  #forward-addr: 1.0.0.1@853#cloudflare-dns.com
+  #forward-addr: 2606:4700:4700::1111@853#cloudflare-dns.com
+  #forward-addr: 2606:4700:4700::1001@853#cloudflare-dns.com
+
+  #forward-addr: 9.9.9.9@853#dns.quad9.net
+  #forward-addr: 149.112.112.112@853#dns.quad9.net
+  #forward-addr: 2620:fe::fe@853#dns.quad9.net
+  #forward-addr: 2620:fe::9@853#dns.quad9.net
+EOF
+  fi
+
+  sed -i -e 's/PIHOLE_DNS_1=8.8.8.8/PIHOLE_DNS_1=127.0.0.1#5335/' -e '/PIHOLE_DNS_2=8.8.4.4/d' /etc/pihole/setupVars.conf
+  sed -i -e 's/server=8.8.8.8/server=127.0.0.1#5335/' -e '/server=8.8.4.4/d' /etc/dnsmasq.d/01-pihole.conf
   systemctl enable -q --now unbound
   systemctl restart pihole-FTL.service
   msg_ok "Installed Unbound"
@@ -105,51 +130,27 @@ fi
 # Prompt user to decide whether to install pihole-updatelists
 read -r -p "Would you like to add pihole-updatelists? <Y/n> " prompt
 if [[ -z "$prompt" || ${prompt,,} =~ ^(y|yes)$ ]]; then
-  # Displaying message about installing pihole-updatelists
-  msg_info "Installing pihole-updatelists"
-  
-  # Installing necessary PHP packages
-  $STD apt-get install -y php-cli php-sqlite3 php-intl php-curl sqlite3
-  
-  # Downloading and executing the installation script for pihole-updatelists
-  wget -O - https://raw.githubusercontent.com/jacklul/pihole-updatelists/master/install.sh | bash -s systemd
-  
-  # Disabling pihole's default updateGravity job in the cron.d/pihole to prevent conflicts
-  sed -e '/pihole updateGravity/ s/^#*/#/' -i /etc/cron.d/pihole
-  
-  # Preparing a systemd override directory for pihole-FTL.service
-  mkdir -p /etc/systemd/system/pihole-FTL.service.d
-  
-  # Creating an override config to pre-execute a command before pihole-FTL starts
-  echo -e "[Service]\nExecStartPre=-/bin/sh -c '[ -w /etc/cron.d/pihole ] && /bin/sed -e \"/pihole updateGravity/ s/^#*/#/\" -i /etc/cron.d/pihole'" > /etc/systemd/system/pihole-FTL.service.d/override.conf
-  
-  # Preparing a systemd override directory for pihole-updatelists.timer
-  mkdir -p /etc/systemd/system/pihole-updatelists.timer.d
-  
-  # Creating an override config for the timer to customize its schedule
-  echo -e "[Timer]\nRandomizedDelaySec=5m\nOnCalendar=\nOnCalendar=*-*-* 03:00:00" > /etc/systemd/system/pihole-updatelists.timer.d/override.conf
-  
-  # Reloading systemd daemon to apply overrides and restarting pihole-FTL.service
-  systemctl daemon-reload
-  systemctl restart pihole-FTL.service
-  
-  # Downloading the configuration file for pihole-updatelists
-  wget -O /etc/pihole-updatelists.conf https://raw.githubusercontent.com/mschabhuettl/PiBlockLXC/main/config/pihole-updatelists.conf
-  
-  # Cleaning up the gravity database by removing all adlists, domain lists, and their group associations
-  sqlite3 /etc/pihole/gravity.db "DELETE FROM adlist"
-  sqlite3 /etc/pihole/gravity.db "DELETE FROM adlist_by_group"
-  sqlite3 /etc/pihole/gravity.db "DELETE FROM domainlist"
-  sqlite3 /etc/pihole/gravity.db "DELETE FROM domainlist_by_group"
-  
-  # Executing pihole-updatelists to update lists based on the newly downloaded configuration
-  pihole-updatelists
+msg_info "Installing pihole-updatelists"
+apt-get install -y php-cli php-sqlite3 php-intl php-curl sqlite3
+wget -O - https://raw.githubusercontent.com/jacklul/pihole-updatelists/master/install.sh | bash -s systemd
+sed -e "/pihole updateGravity/ s/^#*/#/" -i /etc/cron.d/pihole
+mkdir -p /etc/systemd/system/pihole-FTL.service.d
+echo -e "[Service]\nExecStartPre=-/bin/sh -c \"[ -w /etc/cron.d/pihole ] && /bin/sed -e \"/pihole updateGravity/ s/^#*/#/\" -i /etc/cron.d/pihole\"" > /etc/systemd/system/pihole-FTL.service.d/override.conf
+mkdir -p /etc/systemd/system/pihole-updatelists.timer.d
+echo -e "[Timer]\nRandomizedDelaySec=5m\nOnCalendar=*-*-* 03:00:00" > /etc/systemd/system/pihole-updatelists.timer.d/override.conf
+systemctl daemon-reload
+systemctl restart pihole-FTL.service
+wget -O /etc/pihole-updatelists.conf https://raw.githubusercontent.com/mschabhuettl/PiBlockLXC/main/config/pihole-updatelists.conf
+sqlite3 /etc/pihole/gravity.db "DELETE FROM adlist"
+sqlite3 /etc/pihole/gravity.db "DELETE FROM adlist_by_group"
+sqlite3 /etc/pihole/gravity.db "DELETE FROM domainlist"
+sqlite3 /etc/pihole/gravity.db "DELETE FROM domainlist_by_group"
+pihole-updatelists
 fi
-
 motd_ssh
 customize
 
 msg_info "Cleaning up"
-$STD apt-get autoremove
-$STD apt-get autoclean
+$STD apt-get -y autoremove
+$STD apt-get -y autoclean
 msg_ok "Cleaned"

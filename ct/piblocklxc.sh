@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-source <(curl -s https://raw.githubusercontent.com/nathankooistra/PiBlockLXC/main/misc/build.func)
-# Copyright (c) 2021-2024 tteck
-# Copyright (c) 2024 mschabhuettl
+source <(curl -s https://raw.githubusercontent.com/mschabhuettl/PiBlockLXC/main/misc/build.func)
+# Copyright (c) 2021-2024 tteck, mschabhuettl
 # Author: tteck (tteckster), mschabhuettl
 # License: MIT
 # https://github.com/mschabhuettl/PiBlockLXC/raw/main/LICENSE
@@ -55,6 +54,8 @@ function default_settings() {
 
 function update_script() {
 header_info
+check_container_storage
+check_container_resources
 if [[ ! -d /etc/pihole ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
 msg_info "Updating ${APP}"
 set +e
