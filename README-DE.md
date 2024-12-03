@@ -12,7 +12,7 @@
   <img src="https://emojicdn.elk.sh/🤝" alt="Handschlag" height="50" />
   <img src="https://avatars.githubusercontent.com/u/8418678" alt="pihole-updatelists" height="100" />
   <img src="https://emojicdn.elk.sh/🤝" alt="Handschlag" height="50" />
-  <img src="https://raw.githubusercontent.com/tteck/Proxmox/main/misc/images/logo-81x112.png" alt="Proxmox VE Helper-Scripts" height="100" />
+  <img src="https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/misc/images/logo-81x112.png" alt="Proxmox VE Helper-Scripts" height="100" />
   <img src="https://emojicdn.elk.sh/🤝" alt="Handschlag" height="50" />
   <img src="https://avatars.githubusercontent.com/u/2678585" alt="Proxmox" height="100" />
 </div>
