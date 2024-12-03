@@ -21,11 +21,11 @@ A project to simplify the installation of [Pi-hole](https://pi-hole.net/) in an 
 
 ## About the Project
 
-This project builds on the helper scripts from [tteck/Proxmox](https://github.com/tteck/Proxmox) and extends them by automatically integrating lists from [RPiList/specials](https://github.com/RPiList/specials) and [Firebog](https://v.firebog.net/hosts/lists.php). The goal is to simplify the setup of a Pi-hole LXC container on a Proxmox server by adding a selection of blocklists for ads, tracking, and potentially harmful websites to the Pi-hole base installation.
+This project builds on the helper scripts from the late [tteck/Proxmox](https://github.com/tteck/Proxmox), whose work laid the foundation for creating LXC containers on Proxmox. Following his passing, the Proxmox helper scripts have been continued as a community project under [community-scripts/ProxmoxVE](https://github.com/community-scripts/ProxmoxVE). This project extends those scripts by integrating lists from [RPiList/specials](https://github.com/RPiList/specials) and [Firebog](https://v.firebog.net/hosts/lists.php). The goal is to simplify the setup of a Pi-hole LXC container on a Proxmox server, adding a curated selection of blocklists for ads, tracking, and potentially harmful websites to the Pi-hole base installation.
 
 ## Features
 
-- Utilizes the foundational script from [tteck](https://github.com/tteck/Proxmox) for LXC creation.
+- Utilizes the foundational script from [community-scripts/ProxmoxVE](https://github.com/community-scripts/ProxmoxVE) for LXC creation.
 - Automatically integrates blocklists from [RPiList/specials](https://github.com/RPiList/specials) and [Firebog](https://v.firebog.net/hosts/lists.php) through [jacklul/pihole-updatelists](https://github.com/jacklul/pihole-updatelists).
 - Simplifies the deployment of a Pi-hole LXC container with pre-configured blocklists for enhanced network protection.
 
