@@ -127,26 +127,6 @@ EOF
   msg_ok "Installed Unbound"
 fi
 
-# Prompt user to decide whether to install pihole-updatelists
-read -r -p "Would you like to add pihole-updatelists? <Y/n> " prompt
-if [[ -z "$prompt" || ${prompt,,} =~ ^(y|yes)$ ]]; then
-msg_info "Installing pihole-updatelists"
-apt-get install -y php-cli php-sqlite3 php-intl php-curl sqlite3
-wget -O - https://raw.githubusercontent.com/jacklul/pihole-updatelists/master/install.sh | bash -s systemd
-sed -e "/pihole updateGravity/ s/^#*/#/" -i /etc/cron.d/pihole
-mkdir -p /etc/systemd/system/pihole-FTL.service.d
-echo -e "[Service]\nExecStartPre=-/bin/sh -c \"[ -w /etc/cron.d/pihole ] && /bin/sed -e \"/pihole updateGravity/ s/^#*/#/\" -i /etc/cron.d/pihole\"" > /etc/systemd/system/pihole-FTL.service.d/override.conf
-mkdir -p /etc/systemd/system/pihole-updatelists.timer.d
-echo -e "[Timer]\nRandomizedDelaySec=5m\nOnCalendar=*-*-* 03:00:00" > /etc/systemd/system/pihole-updatelists.timer.d/override.conf
-systemctl daemon-reload
-systemctl restart pihole-FTL.service
-wget -O /etc/pihole-updatelists.conf https://raw.githubusercontent.com/mschabhuettl/PiBlockLXC/main/config/pihole-updatelists.conf
-sqlite3 /etc/pihole/gravity.db "DELETE FROM adlist"
-sqlite3 /etc/pihole/gravity.db "DELETE FROM adlist_by_group"
-sqlite3 /etc/pihole/gravity.db "DELETE FROM domainlist"
-sqlite3 /etc/pihole/gravity.db "DELETE FROM domainlist_by_group"
-pihole-updatelists
-fi
 motd_ssh
 customize
 
