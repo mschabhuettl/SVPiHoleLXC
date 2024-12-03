@@ -26,9 +26,9 @@ jobs:
       # Clone the original repository
       - name: Clone Original Repository
         run: |
-          echo "original-repo/" >> .gitignore # Ignore the cloned directory
-          git clone --depth 1 https://github.com/community-scripts/ProxmoxVE original-repo
-          rm -rf original-repo/.git          # Remove Git metadata to prevent submodule errors
+          mkdir -p tmp-original-repo
+          git clone --depth 1 https://github.com/community-scripts/ProxmoxVE tmp-original-repo
+          rm -rf tmp-original-repo/.git # Remove Git metadata to prevent submodule errors
 
       # Copy and modify the necessary files
       - name: Sync and Modify Files
@@ -97,6 +97,11 @@ jobs:
           sed -i '/motd_ssh/i sqlite3 /etc/pihole/gravity.db "DELETE FROM domainlist_by_group"' install/piblocklxc-install.sh
           sed -i '/motd_ssh/i pihole-updatelists' install/piblocklxc-install.sh
           sed -i '/motd_ssh/i fi' install/piblocklxc-install.sh
+
+      # Clean up temporary repository
+      - name: Clean Up Temporary Repository
+        run: |
+          rm -rf tmp-original-repo
 
       # Commit changes and create a Pull Request
       - name: Commit and Create Pull Request
