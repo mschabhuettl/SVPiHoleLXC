@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Copyright (c) 2021-2024 tteck, mschabhuettl
+# Copyright (c) 2021-2025 tteck, mschabhuettl
 # Author: tteck (tteckster), mschabhuettl
 # License: MIT
 # https://github.com/mschabhuettl/PiBlockLXC/raw/main/LICENSE
